@@ -6,7 +6,6 @@ public class ResponseUtil {
 
     public static <T> ApiResponseDTO<T> ok(T response) {
         return ApiResponseDTO.<T>builder()
-                .status(200)
                 .success(true)
                 .response(response)
                 .errorResponse(null)
@@ -15,7 +14,6 @@ public class ResponseUtil {
 
     public static <T> ApiResponseDTO<T> error(ErrorResponse errorResponse) {
         return ApiResponseDTO.<T>builder()
-                .status(errorResponse.getStatus())
                 .success(false)
                 .response(null)
                 .errorResponse(errorResponse)

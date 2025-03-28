@@ -2,16 +2,21 @@ package kr.co.ipdisk.dundunhsk.HSKsite.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.co.ipdisk.dundunhsk.HSKsite.common.ErrorResponse;
 import kr.co.ipdisk.dundunhsk.HSKsite.common.ResponseUtil;
 import kr.co.ipdisk.dundunhsk.HSKsite.data.dtoSet.ApiResponseDTO;
 import kr.co.ipdisk.dundunhsk.HSKsite.data.dtoSet.BoardRequestDTO;
 import kr.co.ipdisk.dundunhsk.HSKsite.data.dtoSet.BoardResponseDTO;
 import kr.co.ipdisk.dundunhsk.HSKsite.data.entitySet.BoardEntity;
+import kr.co.ipdisk.dundunhsk.HSKsite.data.enumSet.ErrorType;
+// import kr.co.ipdisk.dundunhsk.HSKsite.data.enumSet.ErrorType;
 import kr.co.ipdisk.dundunhsk.HSKsite.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -33,11 +38,17 @@ public class BoardService {
         return ResponseUtil.ok(boardResponseList);
     }
 
+    // ^ 게시판 생성
     @Transactional
     public ApiResponseDTO<BoardResponseDTO> createBoard(BoardRequestDTO boardRequestDTO){
-        BoardEntity saveBoard = boardRepository.save(BoardEntity.of(boardRequestDTO));
-        // * Debug 전용 출력문
-        return ResponseUtil.ok(BoardResponseDTO.of(saveBoard));
+
+        if(boardRepository.findByBoardTableName(boardRequestDTO.getBoardTableName()).isEmpty()){
+            BoardEntity saveBoard = boardRepository.save(BoardEntity.of(boardRequestDTO));
+            // * Debug 전용출력문
+            return ResponseUtil.ok(BoardResponseDTO.of(saveBoard));
+        } else {
+            return ResponseUtil.error(ErrorResponse.of(ErrorType.DUPLICATED_TABLE));
+        }
     }
 
 }
