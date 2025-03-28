@@ -8,13 +8,13 @@ import lombok.Getter;
 public class ApiResponseDTO<T> {
 
     private boolean success;
-    private T response;
+    private T data;
     private ErrorResponse errorResponse;
 
     @Builder
-    private ApiResponseDTO(boolean success, T response, ErrorResponse errorResponse) {
+    private ApiResponseDTO(boolean success, T data, ErrorResponse errorResponse) {
         this.success = success;
-        this.response = response;
+        this.data = data;
         this.errorResponse = errorResponse;
     }
     

@@ -7,7 +7,7 @@ public class ResponseUtil {
     public static <T> ApiResponseDTO<T> ok(T response) {
         return ApiResponseDTO.<T>builder()
                 .success(true)
-                .response(response)
+                .data(response)
                 .errorResponse(null)
                 .build();
     }
@@ -15,7 +15,7 @@ public class ResponseUtil {
     public static <T> ApiResponseDTO<T> error(ErrorResponse errorResponse) {
         return ApiResponseDTO.<T>builder()
                 .success(false)
-                .response(null)
+                .data(null)
                 .errorResponse(errorResponse)
                 .build();
     }

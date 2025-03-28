@@ -51,4 +51,13 @@ public class BoardService {
         }
     }
 
+    @Transactional
+    public ApiResponseDTO<Optional<BoardEntity>> getByIdBoard(Long id){
+        if( boardRepository.findById(id).isPresent()){
+            return ResponseUtil.ok(boardRepository.findById(id));
+        }else{
+            return ResponseUtil.error(ErrorResponse.of(ErrorType.NOT_FOUND_BOARD));
+        }
+    
+    }
 }

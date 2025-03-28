@@ -5,6 +5,7 @@ import lombok.Getter;
 
 @Getter
 public class BoardRequestDTO {
+    private long id;
     private String boardTableName;
     private String boardName;
     private String boardDescription;
